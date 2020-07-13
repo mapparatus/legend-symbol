@@ -1,0 +1,84 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+}
+
+.App__map {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.App__legend {
+  background: white;
+  border: solid 1px #eaeaea;
+  border-radius: 2px;
+  max-width: 260px;
+  max-height: 400px;
+  position: absolute;
+  top: 0.8em;
+  right: 0.8em;
+  display: flex;
+  flex-direction: column;
+}
+
+.App__legend__h1 {
+  text-align: left;
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: 400;
+  padding: 0.8em;
+  padding-bottom: 0.8em;
+}
+
+.LayerList {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.8em;
+  font-family: sans-serif;
+}
+
+.LayerList__item {
+  margin-bottom: 0.6em;
+  font-size: 0.8em;
+  display: flex;
+  align-self: center;
+}
+
+.LayerList__item:last-child {
+  margin-bottom: 0;
+}
+
+.LayerList__item__map-symbol {
+  width: 1.4em;
+  height: 1.4em;
+  position: relative;
+  margin: 0 0.4em;
+}
+
+.LayerList__item__label {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.LayerList__item__label--is-visible {
+  text-decoration: initial;
+  color: initial;
+}
+

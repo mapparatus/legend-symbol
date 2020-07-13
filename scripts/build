@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+./node_modules/.bin/microbundle -i example/index.js -o dist/example/index.js --no-pkg-main -f umd
+./node_modules/.bin/microbundle

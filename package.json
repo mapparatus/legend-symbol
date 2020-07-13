@@ -1,0 +1,26 @@
+{
+  "name": "@mgljs-contrib/map-legend",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@mapbox/mapbox-gl-style-spec": "^13.16.0"
+  },
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "unpkg": "dist/index.umd.js",
+  "scripts": {
+    "build": "./scripts/build",
+    "dev": "./scripts/demo"
+  },
+  "devDependencies": {
+    "classnames": "^2.2.6",
+    "concurrently": "^5.2.0",
+    "http-server": "^0.12.3",
+    "mapbox-gl": "^1.11.1",
+    "microbundle": "^0.12.2",
+    "preact": "^10.4.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

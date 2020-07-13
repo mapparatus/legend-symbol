@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+
+./node_modules/.bin/concurrently \
+  "./node_modules/.bin/microbundle watch --no-compress -i demo/index.js -o dist/demo/index.js --no-pkg-main -f umd --external none --define EXTERNAL_MAPBOX_GL_API_KEY=\"$MAPBOX_API_KEY\"" \
+  "./node_modules/.bin/http-server -i -c0"
+

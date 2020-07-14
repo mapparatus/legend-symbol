@@ -24,8 +24,7 @@ body {
   background: white;
   border: solid 1px #eaeaea;
   border-radius: 2px;
-  min-width: 260px;
-  max-width: 400px;
+  width: 260px;
   max-height: 400px;
   position: absolute;
   top: 0.8em;
@@ -86,6 +85,7 @@ body {
   height: 1.4em;
   position: relative;
   margin: 0 0.4em;
+  flex-shrink: 0;
 }
 
 .LayerList__item__label {

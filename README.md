@@ -3,12 +3,12 @@ An expressive map symbol (`<svg/>` icon) to represent a layer styled on a mapbox
 
 Supports the following layers types
 
- - ![example symbol](ms_circle) `circle`
- - ![example symbol](ms_fill) `fill`
- - ![example symbol](ms_line) `line`
- - ![example symbol](ms_symbol) `symbol`
-   - as icon ![example symbol](ms_icon)
-   - as text ![example symbol](ms_icon)
+ - `circle`
+ - `fill`
+ - `line`
+ - `symbol` - as icon or text
+
+![screenshot of library in action](screenshots/os_zoomstack_road_demo.png)
 
 
 ## Usage
@@ -18,6 +18,10 @@ Here is an example using react. In the example below `map` is a instance of a ma
 import LegendSymbol from '@mgljs-contrib/legend-symbol/react';
 
 function Foo () {
+  // Where `map` is a mapbox-gl map instance.
+  const style = map.getStyle();
+  const layer = style.layers[2];
+
   return (
     <LegendSymbol map={map} layer={layer} />
   );

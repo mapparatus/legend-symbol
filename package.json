@@ -1,5 +1,5 @@
 {
-  "name": "@mgljs-contrib/map-legend",
+  "name": "legend-symbol",
   "version": "0.0.0",
   "private": true,
   "dependencies": {

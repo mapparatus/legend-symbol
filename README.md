@@ -1,4 +1,6 @@
 # legend-symbol
+**Note:** This is a work in progress
+
 An expressive map symbol (`<svg/>` icon) to represent a layer styled on a mapbox-gl-js map.
 
 Supports the following layers types

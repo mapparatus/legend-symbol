@@ -11,6 +11,8 @@ function App (props={}) {
   const [showOnlyRendered, setShowOnlyRendered] = useState(false);
   const [inViewport, setInViewport] = useState(new Set);
   const [layers, setLayers] = useState([]);
+  const [sprite, setSprite] = useState(null);
+  const [zoom, setZoom] = useState(0);
   const mapEl = useRef();
 
   useEffect(() => {
@@ -26,7 +28,9 @@ function App (props={}) {
     setMap(map);
 
     const loadHandler = () => {
-      setLayers(map.getStyle().layers);
+      const mapInstance = map.getStyle();
+      setLayers(mapInstance.layers);
+      setSprite(mapInstance.sprite);
     }
 
     const featuresHandler = () => {
@@ -41,6 +45,7 @@ function App (props={}) {
     }
 
     map.on("load", loadHandler);
+    map.on("zoomend", () => setZoom(map.getZoom()));
     map.on("idle", featuresHandler);
 
     return () => {
@@ -75,7 +80,7 @@ function App (props={}) {
             "LayerList__item--visible": isInViewport, 
           })}>
             <div className="LayerList__item__map-symbol">
-              <LegendSymbol map={map} layer={layer} />
+              <LegendSymbol sprite={sprite} zoom={zoom} layer={layer} />
             </div>
             <div className={classnames({
               "LayerList__item__label": true,

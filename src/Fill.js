@@ -1,10 +1,6 @@
-import {mapImageToDataURL} from "./util";
-
-
 export default function Fill (props) {
-  const {map, expr, layer} = props;
-  const dataUrl = mapImageToDataURL(
-    map,
+  const {image, expr, layer} = props;
+  const dataUrl = image(
     expr(layer, "paint", "fill-pattern")
   );
 

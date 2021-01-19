@@ -1,14 +1,11 @@
-import {mapImageToDataURL} from './util';
+function renderIconSymbol ({expr, layer, image}) {
+  const imgKey = expr(layer, "layout", "icon-image");
 
-
-function renderIconSymbol ({expr, layer, map}) {
-  const dataUrl = mapImageToDataURL(
-    map,
-    expr(layer, "layout", "icon-image"),
-  )
-
+  if (!imgKey) {
+    return null;
+  }
+  const dataUrl = image(imgKey);
   if (dataUrl) {
-    // TODO:
     return {
       element: "div",
       attributes: {
@@ -22,25 +19,10 @@ function renderIconSymbol ({expr, layer, map}) {
         }
       },
     };
-    // return <Image key={icon} {...image.data} />
   }
   else {
     return null;
   }
-
-  // if (layer && layer.layout && layer.layout["icon-image"]) {
-  //   let icon = layer.layout["icon-image"];
-  //   icon = expr(layer, "layout", "icon-image");
-
-  //   // Slight hack but this API has been stable for a while...
-  //   const image = map.style.imageManager.images[icon];
-
-  //   if (image) {
-  //     // TODO:
-  //     return {element: "div"};
-  //     // return <Image key={icon} {...image.data} />
-  //   }
-  // }
 }
 
 function renderTextSymbol ({expr, layer}) {

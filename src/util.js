@@ -18,10 +18,7 @@ const PROP_MAP = [
   ["text", "symbol"],
 ];
 
-export function exprHandler (map) {
-  const zoom = map.getZoom();
-
-
+export function exprHandler ({zoom}) {
   function prefixFromProp (prop) {
     const out = PROP_MAP.find(def => {
       const type = def[0];
@@ -99,5 +96,60 @@ export function mapImageToDataURL (map, icon) {
 
   // Not toBlob() because toDataURL is faster and synchronous.
   return canvasEl.toDataURL();
+}
+
+
+const dataStore = new Map();
+export const cache = {
+  add: (key, value) => {
+    if (dataStore.has(key)) {
+      throw new Error(`Cache already contains '${key}'`);
+    }
+    dataStore.set(key, {
+      value,
+      count: 1
+    });
+  },
+  fetch: (key) => {
+    const cacheObj = dataStore.get(key);
+    if(cacheObj) {
+      cacheObj.count++;
+      return cacheObj.value;
+    }
+  },
+  release: (key) => {
+    const cacheObj = dataStore.get(key);
+    if(!cacheObj) {
+      throw new Error(`No such key in cache '${key}'`);
+    }
+    cacheObj.count--;
+
+    if (cacheObj.count === 0) {
+      dataStore.delete(key);
+    }
+  },
+};
+
+export function loadImage (url) {
+  let cancelled = false;
+  const promise = new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      if (!cancelled) resolve(img);
+    }
+    img.onerror = e => {
+      if (!cancelled) reject(e);
+    };
+    img.src = url;
+  });
+  promise.cancel = () => {
+    cancelled = true;
+  }
+  return promise;
+}
+
+export function loadJson (url) {
+  return fetch(url).then(res => res.json());
 }
 

@@ -1,10 +1,6 @@
-import {mapImageToDataURL} from "./util";
-
-
 export default function Line (props) {
-  const {layer, map, expr} = props;
-  const linePatternDataUrl = mapImageToDataURL(
-    map,
+  const {layer, image, expr} = props;
+  const linePatternDataUrl = image(
     expr(layer, "paint", "line-pattern")
   );
 
@@ -17,10 +13,6 @@ export default function Line (props) {
     strokeOpacity: expr(layer, "paint", "line-opacity"),
   };
   const sw = style.strokeWidth;
-
-  if (Number.isNaN(style.strokeWidth)) {
-    debugger;
-  }
 
   return {
     element: "svg",

@@ -1,3 +1,5 @@
+import {cache, loadImage, loadJson} from '../src/util';
+
 export default function reactish (legendSymbol, createElement, {useState, useEffect}) {
   function attrReplace (attrs) {
     const out = {};
@@ -22,27 +24,45 @@ export default function reactish (legendSymbol, createElement, {useState, useEff
     );
   }
 
-  return function Component ({map, layer}) {
-    const [loaded, setLoaded] = useState(false);
-    const [zoom, setZoom] = useState(map.getZoom());
+  return function Component (props) {
+    const {zoom, layer} = props;
+    const spriteUrl = props.sprite;
+    const [sprite, setSprite] = useState(null);
 
     useEffect(() => {
-      const zoomHandler = () => {
-        setZoom(map.getZoom());
-      };
-      const loadHandler = () => {
-        setLoaded(true);
-      }
-      map.on("zoom", zoomHandler);
-      map.on("load", loadHandler);
+      let promise;
+      if (spriteUrl) {
+        const existing = cache.fetch(spriteUrl);
+        if (existing) {
+          existing.then(([image, json]) => {
+            setSprite({
+              image,
+              json
+            });
+          });
+        }
+        else {
+          promise = Promise.all([
+            loadImage(spriteUrl+'@2x.png'),
+            loadJson(spriteUrl+'.json'),
+          ]);
+          cache.add(spriteUrl, promise);
+          promise.then(([image, json]) => {
+            setSprite({
+              image,
+              json
+            });
+          });
 
-      return () => {
-        map.off("zoom", zoomHandler);
-        map.off("load", loadHandler);
+          return () => {
+            cache.release(spriteUrl);
+          }
+        }
       }
-    }, [map]);
+    }, [spriteUrl]);
 
-    const tree = legendSymbol({map, layer, zoom});
+    const tree = legendSymbol({sprite, zoom, layer});
     return asReact(tree);
+
   }
 }

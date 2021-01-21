@@ -49,7 +49,7 @@ export default function reactish (legendSymbol, createElement, {useState, useEff
         else {
           promise = Promise.all([
             loadImage(spriteUrl+'@2x.png', {transformRequest}),
-            loadJson(spriteUrl+'@2x.json', {transformRequest}),
+            loadJson(spriteUrl+'.json', {transformRequest}),
           ]);
           cache.add(spriteUrl, promise);
           promise.then(([image, json]) => {

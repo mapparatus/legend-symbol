@@ -130,7 +130,7 @@ export const cache = {
   },
 };
 
-export function loadImage (url) {
+export function loadImage (url, {transformRequest}) {
   let cancelled = false;
   const promise = new Promise((resolve, reject) => {
     const img = new Image();
@@ -149,7 +149,9 @@ export function loadImage (url) {
   return promise;
 }
 
-export function loadJson (url) {
-  return fetch(url).then(res => res.json());
+export function loadJson (url, {transformRequest}) {
+  const fetchObj = {...transformRequest(url)};
+  delete["url"];
+  return fetch(fetchObj.url, ...fetchObj).then(res => res.json());
 }
 

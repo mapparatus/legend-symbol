@@ -130,7 +130,7 @@ export const cache = {
   },
 };
 
-export function loadImage (url, {transformRequest}) {
+function loadImageViaTag (url) {
   let cancelled = false;
   const promise = new Promise((resolve, reject) => {
     const img = new Image();
@@ -147,6 +147,26 @@ export function loadImage (url, {transformRequest}) {
     cancelled = true;
   }
   return promise;
+}
+
+function loadImageViaFetch (url, init) {
+  return fetch(url, obj).then(res => res.json());
+
+  fetch(url, init)
+    .then(res => res.blob())
+    .then(blob => URL.createObjectURL(blob))
+    .then(url => loadImageViaTag(url));
+}
+
+export function loadImage (url, {transformRequest}) {
+  const fetchObj = {...transformRequest(url)};
+
+  if (fetchObj.headers) {
+    return loadImageViaFetch(url);
+  }
+  else {
+    return loadImageViaTag(url);
+  }
 }
 
 export function loadJson (url, {transformRequest}) {

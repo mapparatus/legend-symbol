@@ -61,7 +61,7 @@ function App (props={}) {
 
   function transformRequest (url) {
     return {
-      url: url,
+      url: url+"?testing=1",
     };
   }
 

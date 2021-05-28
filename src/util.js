@@ -151,7 +151,6 @@ export function loadImage (url, {transformRequest}) {
 
 export function loadJson (url, {transformRequest}) {
   const fetchObj = {...transformRequest(url)};
-  delete["url"];
   return fetch(fetchObj.url, ...fetchObj).then(res => res.json());
 }
 

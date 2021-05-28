@@ -156,9 +156,7 @@ function removeUrl (obj) {
 }
 
 function loadImageViaFetch (url, init) {
-  return fetch(url, removeUrl(obj)).then(res => res.json());
-
-  fetch(url, init)
+  return fetch(url, removeUrl(init))
     .then(res => res.blob())
     .then(blob => URL.createObjectURL(blob))
     .then(url => loadImageViaTag(url));

@@ -23,9 +23,14 @@ function Foo () {
   // Where `map` is a mapbox-gl map instance.
   const style = map.getStyle();
   const layer = style.layers[2];
+  const sprite = style.sprite;
 
   return (
-    <LegendSymbol map={map} layer={layer} />
+    <LegendSymbol
+      sprite={sprite}
+      zoom={zoom}
+      layer={layer}
+    />
   );
 }
 ```

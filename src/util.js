@@ -149,10 +149,14 @@ function loadImageViaTag (url) {
   return promise;
 }
 
-function loadImageViaFetch (url, init) {
-  return fetch(url, obj).then(res => res.json());
+function removeUrl (obj) {
+  obj = {...obj};
+  delete obj['url'];
+  return obj;
+}
 
-  fetch(url, init)
+function loadImageViaFetch (url, init) {
+  return fetch(url, removeUrl(init))
     .then(res => res.blob())
     .then(blob => URL.createObjectURL(blob))
     .then(url => loadImageViaTag(url));
@@ -171,6 +175,6 @@ export function loadImage (url, {transformRequest}) {
 
 export function loadJson (url, {transformRequest}) {
   const fetchObj = {...transformRequest(url)};
-  return fetch(fetchObj.url, ...fetchObj).then(res => res.json());
+  return fetch(fetchObj.url, removeUrl(fetchObj)).then(res => res.json());
 }
 

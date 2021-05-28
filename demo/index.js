@@ -59,6 +59,11 @@ function App (props={}) {
     setShowOnlyRendered(checked);
   }
 
+  function transformRequest (url) {
+    return {
+      url: url+"?testing=1",
+    };
+  }
 
   return <div className="App">
     <div className="App__map" ref={mapEl} />
@@ -80,7 +85,7 @@ function App (props={}) {
             "LayerList__item--visible": isInViewport, 
           })}>
             <div className="LayerList__item__map-symbol">
-              <LegendSymbol sprite={sprite} zoom={zoom} layer={layer} />
+              <LegendSymbol sprite={sprite} zoom={zoom} layer={layer} transformRequest={transformRequest} />
             </div>
             <div className={classnames({
               "LayerList__item__label": true,

@@ -24,14 +24,16 @@ export default function reactish (legendSymbol, createElement, {useState, useEff
     );
   }
 
+  const transformRequestFallback = (url) => {
+    return {url: url};
+  };
+
   return function Component (props) {
     const {zoom, layer} = props;
     const spriteUrl = props.sprite;
     const [sprite, setSprite] = useState(null);
 
-    const transformRequest = props.transformRequest || function (url) {
-      return {url: url};
-    };
+    const transformRequest = props.transformRequest || transformRequestFallback;
 
     useEffect(() => {
       let promise;
@@ -64,7 +66,7 @@ export default function reactish (legendSymbol, createElement, {useState, useEff
           }
         }
       }
-    }, [spriteUrl]);
+    }, [spriteUrl, transformRequest]);
 
     const tree = legendSymbol({sprite, zoom, layer});
     return asReact(tree);
